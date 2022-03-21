@@ -20,7 +20,7 @@
           @blur="$v.email.$touch()"
         ></v-text-field>
         <v-text-field
-          :disabled="$route.params.id"
+          :disabled="!!$route.params.id"
           v-model="academicRegister"
           :error-messages="academicRegisterErrors"
           label="Registro Academico"
@@ -29,7 +29,7 @@
           @blur="$v.academicRegister.$touch()"
         ></v-text-field>
         <v-text-field
-          :disabled="$route.params.id"
+          :disabled="!!$route.params.id"
           v-model="cpf"
           :error-messages="cpfErrors"
           label="CPF"
@@ -128,8 +128,9 @@ export default {
       };
       if (this.$route.params.id) {
         student.id = this.$route.params.id;
-        students.updateStudent(student).then((res) => {
-          if (res.status === 200) {
+        students
+          .updateStudent(student)
+          .then(() => {
             this.$store.dispatch("modifyState", true);
             this.$store.dispatch(
               "modifyMessage",
@@ -137,15 +138,16 @@ export default {
             );
             this.$store.dispatch("modifyColor", "success");
             this.$router.push("/");
-          } else {
+          })
+          .catch(() => {
             this.$store.dispatch("modifyState", true);
-            this.$store.dispatch("modifyMessage", "Falha ao Atualizar");
+            this.$store.dispatch("modifyMessage", "Falha ao atualizar Aluno");
             this.$store.dispatch("modifyColor", "error");
-          }
-        });
+          });
       } else {
-        students.createStudent(student).then((res) => {
-          if (res.status === 201) {
+        students
+          .createStudent(student)
+          .then(() => {
             this.$store.dispatch("modifyState", true);
             this.$store.dispatch(
               "modifyMessage",
@@ -153,8 +155,12 @@ export default {
             );
             this.$store.dispatch("modifyColor", "success");
             this.$router.push("/");
-          }
-        });
+          })
+          .catch(() => {
+            this.$store.dispatch("modifyState", true);
+            this.$store.dispatch("modifyMessage", "Falha ao criar Aluno");
+            this.$store.dispatch("modifyColor", "error");
+          });
       }
     },
     cancel() {
