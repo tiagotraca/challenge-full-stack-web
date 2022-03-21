@@ -8,9 +8,16 @@
     <template v-slot:top>
       <PageTitle title="Consulta de Alunos" />
       <v-toolbar flat>
-        <v-text-field label="Digite a busca"></v-text-field>
+        <v-text-field
+          label="Digite a busca"
+          v-model="search"
+          @input="$v.search.$touch()"
+          @blur="$v.search.$touch()"
+        ></v-text-field>
         <v-divider class="mx-4" inset vertical></v-divider>
-        <v-btn color="primary" dark class="mb-2"> pesquisar </v-btn>
+        <v-btn color="primary" dark class="mb-2" @click="submit">
+          pesquisar
+        </v-btn>
         <v-spacer></v-spacer>
         <v-btn color="primary" dark class="mb-2" to="/cadastrar">
           Criar Aluno
@@ -52,6 +59,7 @@ export default {
     PageTitle,
   },
   data: () => ({
+    search: "",
     dialogDelete: false,
     snackbar: false,
     timeout: 3000,
@@ -88,9 +96,22 @@ export default {
   },
 
   methods: {
+    submit() {
+      if (this.search) {
+        this.$router.push("/?search=" + this.search);
+        students
+          .getStudents(this.$route.query?.search)
+          .then((value) => {
+            this.students = value.data;
+          })
+          .catch((e) => {
+            this.errors.push(e);
+          });
+      }
+    },
     initialize() {
       students
-        .getStudents()
+        .getStudents(this.$route.query?.search)
         .then((value) => {
           this.students = value.data;
         })
