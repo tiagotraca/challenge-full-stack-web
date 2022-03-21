@@ -8,12 +8,7 @@
     <template v-slot:top>
       <PageTitle title="Consulta de Alunos" />
       <v-toolbar flat>
-        <v-text-field
-          label="Digite a busca"
-          v-model="search"
-          @input="$v.search.$touch()"
-          @blur="$v.search.$touch()"
-        ></v-text-field>
+        <v-text-field label="Digite a busca" v-model="search"></v-text-field>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-btn color="primary" dark class="mb-2" @click="submit">
           pesquisar
@@ -96,19 +91,6 @@ export default {
   },
 
   methods: {
-    submit() {
-      if (this.search) {
-        this.$router.push("/?search=" + this.search);
-        students
-          .getStudents(this.$route.query?.search)
-          .then((value) => {
-            this.students = value.data;
-          })
-          .catch((e) => {
-            this.errors.push(e);
-          });
-      }
-    },
     initialize() {
       students
         .getStudents(this.$route.query?.search)
@@ -118,6 +100,15 @@ export default {
         .catch((e) => {
           this.errors.push(e);
         });
+    },
+    submit() {
+      if (this.search) {
+        this.$router.push("/?search=" + this.search);
+        this.initialize();
+      } else {
+        this.$router.push("/");
+        this.initialize();
+      }
     },
 
     editItem(item) {
@@ -136,6 +127,7 @@ export default {
           this.$store.dispatch("modifyState", true);
           this.$store.dispatch("modifyMessage", "Aluno deletado com sucesso");
           this.$store.dispatch("modifyColor", "success");
+          this.initialize();
         } else {
           this.$store.dispatch("modifyState", true);
           this.$store.dispatch("modifyMessage", "Falha ao deletar registro");
@@ -143,14 +135,6 @@ export default {
         }
       });
 
-      students
-        .getStudents()
-        .then((value) => {
-          this.students = value.data;
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
       this.closeDelete();
     },
 
