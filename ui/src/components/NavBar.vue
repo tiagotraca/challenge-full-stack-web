@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Snackbar />
     <v-app-bar app clipped-left color="white">
       <v-avatar size="100px">
         <v-img src="logo.png"></v-img>
@@ -32,7 +33,9 @@
   </div>
 </template>
 <script>
+import Snackbar from "./SnackBar.vue";
 export default {
+  components: { Snackbar },
   data: () => ({
     items: [{ title: "alunos", icon: "mdi-school", link: "/" }],
   }),
