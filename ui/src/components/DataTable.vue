@@ -19,8 +19,8 @@
         </v-btn>
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="text-h5"
-              >Tem certeza que deseja deletar esse item?</v-card-title
+            <v-card-title class="text-h6"
+              >Tem certeza que deseja deletar esse Aluno?</v-card-title
             >
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -143,7 +143,6 @@ export default {
     closeDelete() {
       this.dialogDelete = false;
       this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       });
     },
