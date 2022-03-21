@@ -130,18 +130,20 @@ export default {
     },
 
     deleteItemConfirm() {
-      students.deleteStudent(this.editedIndex, 1).then((res) => {
-        this.isDelete = false;
-        if (res.status === 200) {
-          this.$store.dispatch("modifyState", true);
-          this.$store.dispatch("modifyMessage", "Aluno deletado com sucesso");
-          this.$store.dispatch("modifyColor", "success");
-        } else {
+      students
+        .deleteStudent(this.editedIndex, 1)
+        .then((res) => {
+          if (res.status === 200) {
+            this.$store.dispatch("modifyState", true);
+            this.$store.dispatch("modifyMessage", "Aluno deletado com sucesso");
+            this.$store.dispatch("modifyColor", "success");
+          }
+        })
+        .catch(() => {
           this.$store.dispatch("modifyState", true);
           this.$store.dispatch("modifyMessage", "Falha ao deletar registro");
           this.$store.dispatch("modifyColor", "error");
-        }
-      });
+        });
 
       students
         .getStudents()
