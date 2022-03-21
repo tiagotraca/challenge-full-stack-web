@@ -1,15 +1,13 @@
 <template>
-  <hello-world />
+  <DataTable />
 </template>
 
 <script>
-import HelloWorld from "../components/HelloWorld";
+import DataTable from "../components/DataTable";
 
 export default {
-  name: "HomeView",
-
   components: {
-    HelloWorld,
+    DataTable,
   },
 };
 </script>
