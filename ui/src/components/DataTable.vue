@@ -19,8 +19,8 @@
         </v-btn>
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="text-h5"
-              >Tem certeza que deseja deletar esse item?</v-card-title
+            <v-card-title class="text-h6"
+              >Tem certeza que deseja deletar esse Aluno?</v-card-title
             >
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -121,19 +121,21 @@ export default {
     },
 
     deleteItemConfirm() {
-      students.deleteStudent(this.editedIndex, 1).then((res) => {
-        this.isDelete = false;
-        if (res.status === 200) {
-          this.$store.dispatch("modifyState", true);
-          this.$store.dispatch("modifyMessage", "Aluno deletado com sucesso");
-          this.$store.dispatch("modifyColor", "success");
-          this.initialize();
-        } else {
+      students
+        .deleteStudent(this.editedIndex, 1)
+        .then((res) => {
+          if (res.status === 200) {
+            this.$store.dispatch("modifyState", true);
+            this.$store.dispatch("modifyMessage", "Aluno deletado com sucesso");
+            this.$store.dispatch("modifyColor", "success");
+            this.initialize();
+          }
+        })
+        .catch(() => {
           this.$store.dispatch("modifyState", true);
           this.$store.dispatch("modifyMessage", "Falha ao deletar registro");
           this.$store.dispatch("modifyColor", "error");
-        }
-      });
+        });
 
       this.closeDelete();
     },
@@ -141,7 +143,6 @@ export default {
     closeDelete() {
       this.dialogDelete = false;
       this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       });
     },

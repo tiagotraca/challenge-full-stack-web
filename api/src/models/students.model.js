@@ -23,6 +23,7 @@ const Student = db.define("student", {
   academic_register: {
     type: Sequelize.STRING,
     allowNull: false,
+    unique: true,
   },
 });
 
