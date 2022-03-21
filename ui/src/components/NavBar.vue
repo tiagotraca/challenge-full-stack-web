@@ -2,7 +2,7 @@
   <div>
     <Snackbar />
     <v-app-bar app clipped-left color="white">
-      <v-avatar size="100px">
+      <v-avatar size="75px">
         <v-img src="logo.png"></v-img>
       </v-avatar>
     </v-app-bar>
