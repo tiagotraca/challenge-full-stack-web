@@ -26,10 +26,12 @@ export default {
   }),
   watch: {
     "$store.state.snackbar": function () {
-      if (this.$store.state.snackbar)
+      if (this.$store.state.snackbar) {
         this.snackbar = this.$store.state.snackbar;
-      this.text = this.$store.state.message;
-      this.color = this.$store.state.color;
+        this.text = this.$store.state.message;
+        this.color = this.$store.state.color;
+      }
+      this.$store.dispatch("modifyState", false);
     },
   },
 };
