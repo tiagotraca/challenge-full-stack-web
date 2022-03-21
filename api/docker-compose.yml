@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  challenge_api:
+    container_name: challenge_api
+
+    build:
+      context: ./
+      target: dev
+    volumes:
+      - .:/src
+    command: yarn start:dev
+    ports:
+      - "4000:4000"
+    environment:
+      NODE_ENV: development
+      DEBUG: nodejs-docker-express:*
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:12
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=challenge_api
+
+
+volumes:
+  db_data:
