@@ -4,14 +4,6 @@
     <v-container>
       <form>
         <v-text-field
-          v-model="academicRegister"
-          :error-messages="academicRegisterErrors"
-          label="Registro Academico"
-          required
-          @input="$v.academicRegister.$touch()"
-          @blur="$v.academicRegister.$touch()"
-        ></v-text-field>
-        <v-text-field
           v-model="name"
           :error-messages="nameErrors"
           label="Nome"
@@ -28,9 +20,18 @@
           @blur="$v.email.$touch()"
         ></v-text-field>
         <v-text-field
+          :disabled="$route.params.id"
+          v-model="academicRegister"
+          :error-messages="academicRegisterErrors"
+          label="Registro Academico"
+          required
+          @input="$v.academicRegister.$touch()"
+          @blur="$v.academicRegister.$touch()"
+        ></v-text-field>
+        <v-text-field
+          :disabled="$route.params.id"
           v-model="cpf"
-          :error-messages="nameErrors"
-          :counter="10"
+          :error-messages="cpfErrors"
           label="CPF"
           required
           @input="$v.cpf.$touch()"
