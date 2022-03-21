@@ -1,62 +1,59 @@
 <template>
-  <v-container>
-    <v-snackbar v-model="snackbar" :timeout="timeout">
-      {{ text }}
+  <div>
+    <PageTitle :title="title" />
+    <v-container>
+      <form>
+        <v-text-field
+          v-model="academicRegister"
+          :error-messages="academicRegisterErrors"
+          label="Registro Academico"
+          required
+          @input="$v.academicRegister.$touch()"
+          @blur="$v.academicRegister.$touch()"
+        ></v-text-field>
+        <v-text-field
+          v-model="name"
+          :error-messages="nameErrors"
+          label="Nome"
+          required
+          @input="$v.name.$touch()"
+          @blur="$v.name.$touch()"
+        ></v-text-field>
+        <v-text-field
+          v-model="email"
+          :error-messages="emailErrors"
+          label="E-mail"
+          required
+          @input="$v.email.$touch()"
+          @blur="$v.email.$touch()"
+        ></v-text-field>
+        <v-text-field
+          v-model="cpf"
+          :error-messages="nameErrors"
+          :counter="10"
+          label="CPF"
+          required
+          @input="$v.cpf.$touch()"
+          @blur="$v.cpf.$touch()"
+        ></v-text-field>
 
-      <template v-slot:action="{ attrs }">
-        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
-          Close
+        <v-btn class="mr-4" @click="submit" :disabled="this.$v.$invalid">
+          salvar
         </v-btn>
-      </template>
-    </v-snackbar>
-    <form>
-      <v-text-field
-        v-model="academicRegister"
-        :error-messages="academicRegisterErrors"
-        label="Registro Academico"
-        required
-        @input="$v.academicRegister.$touch()"
-        @blur="$v.academicRegister.$touch()"
-      ></v-text-field>
-      <v-text-field
-        v-model="name"
-        :error-messages="nameErrors"
-        label="Nome"
-        required
-        @input="$v.name.$touch()"
-        @blur="$v.name.$touch()"
-      ></v-text-field>
-      <v-text-field
-        v-model="email"
-        :error-messages="emailErrors"
-        label="E-mail"
-        required
-        @input="$v.email.$touch()"
-        @blur="$v.email.$touch()"
-      ></v-text-field>
-      <v-text-field
-        v-model="cpf"
-        :error-messages="nameErrors"
-        :counter="10"
-        label="CPF"
-        required
-        @input="$v.cpf.$touch()"
-        @blur="$v.cpf.$touch()"
-      ></v-text-field>
-
-      <v-btn class="mr-4" @click="submit" :disabled="this.$v.$invalid">
-        salvar
-      </v-btn>
-      <v-btn @click="cancel"> Cancelar </v-btn>
-    </form>
-  </v-container>
+        <v-btn @click="cancel"> Cancelar </v-btn>
+      </form>
+    </v-container>
+  </div>
 </template>
 <script>
 import students from "@/services/students";
 import { validationMixin } from "vuelidate";
 import { required, email } from "vuelidate/lib/validators";
+import PageTitle from "@/components/PageTitle.vue";
 
 export default {
+  components: { PageTitle },
+
   mixins: [validationMixin],
 
   validations: {
@@ -67,13 +64,11 @@ export default {
   },
 
   data: () => ({
+    title: "Cadastro de Alunos",
     name: "",
     email: "",
     cpf: "",
     academicRegister: "",
-    snackbar: false,
-    text: "My timeout is set to 2000.",
-    timeout: 2000,
   }),
 
   computed: {
@@ -105,7 +100,8 @@ export default {
     },
   },
   created() {
-    if (this.$route.params.id)
+    if (this.$route.params.id) {
+      this.title = "Atualizar Aluno";
       students
         .getStudentById(this.$route.params.id)
         .then((value) => {
@@ -118,6 +114,7 @@ export default {
         .catch((e) => {
           this.errors.push(e);
         });
+    }
   },
 
   methods: {
@@ -148,10 +145,7 @@ export default {
       } else {
         students.createStudent(student).then((res) => {
           if (res.status === 201) {
-            this.$store.dispatch("modifyState", {
-              snack: true,
-              message: "estudante salvo com sucesso",
-            });
+            this.$store.dispatch("modifyState", true);
             this.$store.dispatch(
               "modifyMessage",
               "estudante salvo com sucesso"
@@ -161,7 +155,6 @@ export default {
           }
         });
       }
-      this.$store.dispatch("modifyState", false);
     },
     cancel() {
       this.$router.push("/");
