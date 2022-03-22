@@ -33,12 +33,10 @@ O front-end foi feito utilizando um projeto padrão do do vue cli.
 - A arquitetura. Faria uma Clean Architecture pois ela favorece a reusabilidade e torna o codigo agnostico a tecnologia, em outras palavras seria mais facil trocar me ORM em caso de necessidade.
 
 - Criaria mais testes para o backend, mais detalhados, criaria o ambiente de teste no docker.
-
-- Melhoraria a organização do store no front.
-
 - Poria mais pensamento na divião dos components no front.
-
+- Melhoraria a organização do store no front.
 - Poria mais pensamento no design do front.
+- poderia ter menssagens mais precisa para erros.
 
 # Quais requisitos obrigatórios que não foram entregues
 
