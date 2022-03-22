@@ -37,6 +37,7 @@
           v-model="cpf"
           :error-messages="cpfErrors"
           label="CPF"
+          type="number"
           required
           @input="$v.cpf.$touch()"
           @blur="$v.cpf.$touch()"
@@ -80,27 +81,27 @@ export default {
     nameErrors() {
       const errors = [];
       if (!this.$v.name.$dirty) return errors;
-      !this.$v.name.required && errors.push("Name is required.");
+      !this.$v.name.required && errors.push("Nome é obrigatório.");
       return errors;
     },
     emailErrors() {
       const errors = [];
       if (!this.$v.email.$dirty) return errors;
-      !this.$v.email.email && errors.push("Must be valid e-mail");
-      !this.$v.email.required && errors.push("E-mail is required");
+      !this.$v.email.email && errors.push("e-mail invalido");
+      !this.$v.email.required && errors.push("E-mail é obrigatório");
       return errors;
     },
     cpfErrors() {
       const errors = [];
       if (!this.$v.cpf.$dirty) return errors;
-      !this.$v.cpf.required && errors.push("E-mail is required");
+      !this.$v.cpf.required && errors.push("Cpf é obrigatório");
       return errors;
     },
     academicRegisterErrors() {
       const errors = [];
       if (!this.$v.academicRegister.$dirty) return errors;
       !this.$v.academicRegister.required &&
-        errors.push("Registro Academico is required");
+        errors.push("Registro Academico é obrigatório");
       return errors;
     },
   },
