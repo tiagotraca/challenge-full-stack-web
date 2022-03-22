@@ -21,7 +21,7 @@ app.get("/healthcheck", (req, res) =>
 
 (async () => {
   try {
-    await sequelize.sync({ force: false, alter: true });
+    await sequelize.sync({ force: true, alter: true });
     app.listen(process.env.PORT || 4000);
   } catch (error) {
     console.error(error);
