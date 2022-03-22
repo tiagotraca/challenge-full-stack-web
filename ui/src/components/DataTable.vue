@@ -7,7 +7,7 @@
   >
     <template v-slot:top>
       <PageTitle title="Consulta de Alunos" />
-      <v-toolbar flat>
+      <v-toolbar flat height="100px">
         <v-text-field label="Digite a busca" v-model="search"></v-text-field>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-btn color="primary" dark class="mb-2" @click="submit">

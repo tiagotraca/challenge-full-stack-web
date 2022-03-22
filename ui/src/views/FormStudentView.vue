@@ -4,6 +4,7 @@
     <v-container>
       <form>
         <v-text-field
+          outlined
           v-model="name"
           :error-messages="nameErrors"
           label="Nome"
@@ -12,6 +13,7 @@
           @blur="$v.name.$touch()"
         ></v-text-field>
         <v-text-field
+          outlined
           v-model="email"
           :error-messages="emailErrors"
           label="E-mail"
@@ -20,6 +22,7 @@
           @blur="$v.email.$touch()"
         ></v-text-field>
         <v-text-field
+          outlined
           :disabled="!!$route.params.id"
           v-model="academicRegister"
           :error-messages="academicRegisterErrors"
@@ -29,6 +32,7 @@
           @blur="$v.academicRegister.$touch()"
         ></v-text-field>
         <v-text-field
+          outlined
           :disabled="!!$route.params.id"
           v-model="cpf"
           :error-messages="cpfErrors"
